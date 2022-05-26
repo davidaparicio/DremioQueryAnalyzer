@@ -1,0 +1,20 @@
+FROM ubuntu:18.04
+LABEL maintainer="Carsten Hufe <carsten.hufe@dremio.com>"
+WORKDIR /code
+
+RUN apt update
+RUN apt install -y ca-certificates curl gzip jq procps tar wget gnupg2
+RUN apt install -y python3.8 python3-pip
+RUN pip3 install requests pyyaml
+
+COPY scripts/vdscreator/vds-creator.py .
+COPY scripts/vdscreator/run_vdscreator_docker.sh .
+COPY vdsdefinition/ ./vdsdefinition/
+RUN chmod 755 run_vdscreator_docker.sh
+
+ENV DREMIO_ENDPOINT="http://dremio-client:9047" \
+    DREMIO_USERNAME="dremio" \
+    DREMIO_PASSWORD="dremio"
+
+#CMD [ "sleep", "infinity"]
+CMD [ "sh", "-c", "/code/run_vdscreator_docker.sh" ]
