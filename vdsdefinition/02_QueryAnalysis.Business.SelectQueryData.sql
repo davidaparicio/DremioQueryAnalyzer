@@ -6,7 +6,7 @@ FROM (SELECT "queryId", "queryText", "queryChunkSizeBytes", "nrQueryChunks", "st
 CAST("totalDurationMS" / 60000.000 AS DECIMAL(10, 3)) AS "totalDurationMinutes", 
 CAST("totalDurationMS" / 1000.000 AS DECIMAL(10, 3)) AS "totalDurationSeconds", 
 "totalDurationMS", ROW_NUMBER() OVER (ORDER BY "totalDurationMS" DESC) AS "rownumByTotalDurationMS", 
-"outcome", "username", "requestType", "queryType", "parentsList", "queueName", "poolWaitTime", "planningTime", 
+"outcome", "username", "requestType", "queryType", "parentsList", "queueName", "poolWaitTime", "planningTime", "context","engineName", 
 "enqueuedTime", "executionTime", "accelerated", "inputRecords", "inputBytes", "outputRecords", "outputBytes", 
 "queryCost", "outcomereason", "CONCAT"('http://<DREMIO_HOST>:9047/jobs?#', "queryId") AS "profileUrl"
 FROM "QueryAnalysis"."Preparation"."results" AS "results"
