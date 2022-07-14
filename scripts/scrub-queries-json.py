@@ -57,6 +57,11 @@ for queriesFile in os.listdir(sys.argv[1]):
                     outcomeReason = item['outcomeReason'];
                     if len(outcomeReason) > 32000:
                              item['outcomeReason'] = outcomeReason[0:31999]
+                if 'context' not in item:
+                    item['context'] = '[]'
+                if 'engineName' not in item:
+                    item['engineName'] = ''
+             
                 queryText = item['queryText']
                 queryId = item['queryId']
                 outitem = item
